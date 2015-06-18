@@ -1,0 +1,16 @@
+Lesson 1:
+  Music: Basic scale middle C up 1 octave. Exercise: Play back down to middle C.
+  Python: Instantiating objects (notes), basic lists.
+
+Lesson 2:
+  Music: Basic scale middle C up 2 octaves, quavers. Exercise: Play back down to middle C,
+         at double speed (semiquavers?).
+  Python: Loops and extra (named) parameters instantiating objects).
+
+Lesson 3:
+  Music: Meet Blue Danube, and then make it a bit more efficient. Exercise: Convert the left
+         hand to use methods.
+  Python: Introduction to methods.
+
+# Improve the plan, figure out what python to introduce. List comprehensions are nice, let's
+# use more of those!
