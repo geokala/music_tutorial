@@ -14,3 +14,8 @@ Lesson 3:
 
 # Improve the plan, figure out what python to introduce. List comprehensions are nice, let's
 # use more of those!
+
+# Make the score have a composer and title set
+
+# Make a mini-lib to remove the complexity from the lessons (pgzero approach-
+# make each lesson have as little outside what it needs as possible
