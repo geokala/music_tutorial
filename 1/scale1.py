@@ -54,7 +54,10 @@ right_hand.append(bar2_right)
 tune = stream.Score(right_hand)
 
 # Add a title
-tune.metadata = metadata.Metadata(title='Python TTTGLS: Lesson 1')
+tune.metadata = metadata.Metadata(
+    title='Python TTTGLS: Lesson 1',
+    composer='New programmer',
+)
 
 ##########################################################################
 #                        LESSON 1 ENDS HERE                              #
