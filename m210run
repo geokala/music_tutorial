@@ -6,8 +6,10 @@
 import os
 import sys
 from music21 import (
+    clef,
     environment,
     metadata,
+    meter,
     note,
     stream,
     )
