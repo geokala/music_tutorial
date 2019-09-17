@@ -12,6 +12,10 @@ from music21 import (
     meter,
     note,
     stream,
+    chord,
+    tie,
+    volume,
+    instrument,
     )
 
 # Tell music21 what to use to play midi and display score
