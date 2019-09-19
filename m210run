@@ -5,7 +5,7 @@
 # Import the libraries we need
 import os
 import sys
-from music21 import (
+from music21 import (  # noqa: F401
     clef,
     environment,
     metadata,
@@ -19,8 +19,36 @@ from music21 import (
     )
 
 # Tell music21 what to use to play midi and display score
-environment.set('midiPath', '/usr/bin/timidity')
-environment.set('musicxmlPath', '/usr/bin/musescore')
+midi_error = None
+score_error = None
+
+if 'linux' in sys.platform:
+    environment.set('midiPath', '/usr/bin/timidity')
+    environment.set('musicxmlPath', '/usr/bin/musescore')
+elif sys.platform == 'darwin':
+    raise NotImplementedError('Coming soon')
+elif sys.platform == 'win32':
+    win_media_player_path = os.path.join(
+        os.environ["PROGRAMFILES(X86)"], r"Windows Media Player\wmplayer.exe"
+    )
+    if os.path.exists(win_media_player_path):
+        environment.set('midiPath', win_media_player_path)
+    else:
+        midi_error = (
+            'Could not find windows media player for playing MIDI. '
+            'Looked in {path}'.format(path=win_media_player_path)
+        )
+
+    musescore_path = os.path.join(
+        os.environ["PROGRAMW6432"], r"MuseScore 3\bin\MuseScore3.exe"
+    )
+    if os.path.exists(musescore_path):
+        environment.set('musicxmlPath', musescore_path)
+    else:
+        score_error = (
+            'Could not find MuseScore. Please install MuseScore 3. '
+            'Looked in {path}'.format(path=musescore_path)
+        )
 
 # Only run this if the script is executed directly, not imported
 if __name__ == '__main__':
@@ -36,6 +64,8 @@ if __name__ == '__main__':
         # Now exit without doing anything
         sys.exit()
 
+    tune = None
+
     src_path = sys.argv[1]
     with open(src_path) as src_handle:
         src = src_handle.read()
@@ -47,6 +77,10 @@ if __name__ == '__main__':
     )
 
     exec(code)
+
+    if not tune:
+        sys.stderr.write('Your code does not contain a tune.\n')
+        sys.exit(1)
 
     remaining_args = sys.argv[2:]
 
