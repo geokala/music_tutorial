@@ -17,9 +17,8 @@ from music21 import (
     )
 
 # Tell music21 what to use to play midi and display score
-environment.set('midiPath', '/usr/local/Cellar/timidity/2.15.0/bin/timidity')
-environment.set('musicxmlPath', '/Applications/MuseScore 3.app/Contents/MacOS/mscore')
-environment.set('directoryScratch', '/Users/darrenjones/')
+environment.set('midiPath', '/usr/bin/timidity')
+environment.set('musicxmlPath', '/usr/bin/musescore')
 
 # Only run this if the script is executed directly, not imported
 if __name__ == '__main__':
