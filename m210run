@@ -24,7 +24,7 @@ if 'linux' in sys.platform:
     midi_path = '/usr/bin/timidity'
     score_path = '/usr/bin/musescore'
 elif sys.platform == 'darwin':
-    midi_path = '/usr/local/Cellar/timidity/2.15.0/bin/timidity'
+    midi_path = '/Applications/VLC.app/Contents/MacOS/VLC'
     score_path = '/Applications/MuseScore 3.app/Contents/MacOS/mscore'
     # Need to set the scratch directory or produced midi/musicxml files will
     # not be accessible to the midi/score applications
