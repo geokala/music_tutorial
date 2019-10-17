@@ -19,36 +19,40 @@ from music21 import (  # noqa: F401
     )
 
 # Tell music21 what to use to play midi and display score
-midi_error = None
-score_error = None
 
 if 'linux' in sys.platform:
-    environment.set('midiPath', '/usr/bin/timidity')
-    environment.set('musicxmlPath', '/usr/bin/musescore')
+    midi_path = '/usr/bin/timidity'
+    score_path = '/usr/bin/musescore'
 elif sys.platform == 'darwin':
-    raise NotImplementedError('Coming soon')
+    midi_path = '/usr/local/Cellar/timidity/2.15.0/bin/timidity'
+    score_path = '/Applications/MuseScore 3.app/Contents/MacOS/mscore'
+    # Need to set the scratch directory or produced midi/musicxml files will
+    # not be accessible to the midi/score applications
+    environment.set('directoryScratch', os.path.expanduser('~'))
 elif sys.platform == 'win32':
-    win_media_player_path = os.path.join(
+    midi_path = os.path.join(
         os.environ["PROGRAMFILES(X86)"], r"Windows Media Player\wmplayer.exe"
     )
-    if os.path.exists(win_media_player_path):
-        environment.set('midiPath', win_media_player_path)
-    else:
-        midi_error = (
-            'Could not find windows media player for playing MIDI. '
-            'Looked in {path}'.format(path=win_media_player_path)
-        )
-
-    musescore_path = os.path.join(
+    score_path = os.path.join(
         os.environ["PROGRAMW6432"], r"MuseScore 3\bin\MuseScore3.exe"
     )
-    if os.path.exists(musescore_path):
-        environment.set('musicxmlPath', musescore_path)
-    else:
-        score_error = (
-            'Could not find MuseScore. Please install MuseScore 3. '
-            'Looked in {path}'.format(path=musescore_path)
-        )
+
+midi_error = None
+score_error = None
+if os.path.exists(midi_path):
+    environment.set('midiPath', midi_path)
+else:
+    midi_error = (
+        'Could not find midi player. '
+        'Looked in {path}'.format(path=midi_path)
+    )
+if os.path.exists(score_path):
+    environment.set('musicxmlPath', score_path)
+else:
+    score_error = (
+        'Could not find MuseScore. Please install MuseScore 3. '
+        'Looked in {path}'.format(path=score_path)
+    )
 
 # Only run this if the script is executed directly, not imported
 if __name__ == '__main__':
@@ -86,10 +90,15 @@ if __name__ == '__main__':
 
     # See if the user put the word 'midi' in the arguments
     if 'midi' in remaining_args:
-        # The stream.Score (tune) object knows how to play itself using the
-        # environment set midi player and will do so when its show method is
-        # called with a 'midi' argument.
-        tune.show('midi')
+        # Give hopefully helpful output if we can't play midi
+        if midi_error:
+            sys.stderr.write(midi_error + '\n')
+            sys.stderr.write('NOT PLAYING MIDI\n')
+        else:
+            # The stream.Score (tune) object knows how to play itself using
+            # the environment set midi player and will do so when its show
+            # method is called with a 'midi' argument.
+            tune.show('midi')
 
     # See if the user put the word 'text' in the arguments
     if 'text' in remaining_args:
@@ -100,7 +109,12 @@ if __name__ == '__main__':
 
     # See if the user put the word 'score' in the arguments
     if 'score' in remaining_args:
-        # The stream.Score (tune) object knows how to display itself as
-        # musical score, and will do so by default when its show method is
-        # called with no arguments.
-        tune.show()
+        # Give hopefully helpful output if we can't show the score
+        if score_error:
+            sys.stderr.write(score_error + '\n')
+            sys.stderr.write('NOT DISPLAYING MUSICAL SCORE\n')
+        else:
+            # The stream.Score (tune) object knows how to display itself as
+            # musical score, and will do so by default when its show method is
+            # called with no arguments.
+            tune.show()
