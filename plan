@@ -1,3 +1,5 @@
+# TODO: Figure out what the plan should actually be
+
 Lesson 1:
   Music: Basic scale middle C up 1 octave. Exercise: Play back down to middle C.
   Python: Instantiating objects (notes), basic lists.
@@ -16,6 +18,3 @@ Lesson 3:
 # use more of those!
 
 # Make the score have a composer and title set
-
-# Make a mini-lib to remove the complexity from the lessons (pgzero approach-
-# make each lesson have as little outside what it needs as possible
