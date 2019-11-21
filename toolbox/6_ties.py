@@ -1,0 +1,27 @@
+notes = stream.Score()
+
+bar1 = stream.Measure()
+bar1.append(note.Note('c4'))
+bar1.append(note.Note('d4'))
+bar1.append(note.Note('e4'))
+tie_start = note.Note('f4')
+tie_start.tie = tie.Tie('start')
+bar1.append(tie_start)
+notes.append(bar1)
+
+bar2 = stream.Measure()
+tie_mid = note.Note('f4', quarterLength=4)
+tie_mid.tie = tie.Tie('continue')
+bar2.append(tie_mid)
+notes.append(bar2)
+
+bar3 = stream.Measure()
+tie_end = note.Note('f4')
+tie_end.tie = tie.Tie('stop')
+bar3.append(tie_end)
+bar3.append(note.Note('a4'))
+bar3.append(note.Note('b4'))
+bar3.append(note.Note('c5'))
+notes.append(bar3)
+
+tune = stream.Score(notes)
